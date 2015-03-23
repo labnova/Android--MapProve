@@ -15,8 +15,8 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.List;
@@ -33,16 +33,12 @@ public class MapsActivity extends ActionBarActivity {
         setUpMapIfNeeded();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setUpMapIfNeeded();
-    }
+
 
     /**
      * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
      * installed) and the map has not already been instantiated.. This will ensure that we only ever
-     * call {@link #setUpMap()} once when {@link float#mMap} is not null.
+     * call once when {@link float#mMap} is not null.
      * <p/>
      * If it isn't installed {@link SupportMapFragment} (and
      * {@link com.google.android.gms.maps.MapView MapView}) will show a prompt for the user to
@@ -61,9 +57,9 @@ public class MapsActivity extends ActionBarActivity {
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                     .getMap();
             // Check if we were successful in obtaining the map.
-            if (mMap != null) {
+           /* if (mMap != null) {
                 setUpMap();
-            }
+            }*/
         }
     }
 
@@ -142,8 +138,32 @@ public class MapsActivity extends ActionBarActivity {
      * just add a marker near Africa.
      * <p/>
      * This should only be called once and when we are sure that {@link #mMap} is not null.
+     *
+     *  private void setUpMap() {
+     mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+     }
+     *
      */
-    private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        MapStateManager mgr = new MapStateManager(this);
+        mgr.saveMapState(mMap);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MapStateManager mgr = new MapStateManager(this);
+        CameraPosition position = mgr.getSavedCameraPosition();
+        if(position != null) {
+            CameraUpdate update = CameraUpdateFactory.newCameraPosition(position);
+            mMap.moveCamera(update);
+        }
+    }
+
+
 }
