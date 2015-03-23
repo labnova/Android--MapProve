@@ -1,0 +1,57 @@
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:text="Location:"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:ems="10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/button1"
+        android:text="Go"
+        android:onClick="geoLocate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
+
+<fragment
+    android:id="@+id/map"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+
+    />
+   <!-- map:cameraTargetLat="38.019647"
+    map:cameraTargetLng="12.515734"
+    map:cameraZoom="15"
+    map:uiRotateGestures="false"
+    map:uiTiltGestures="false"
+    map:uiScrollGestures="false"
+    map:uiZoomGestures="false"
+    map:uiZoomControls="false"
+    map:mapType="terrain"-->
+
+
+</LinearLayout>
